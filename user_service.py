@@ -64,7 +64,7 @@ class UsersHandler(BaseHandler):
                 "INSERT INTO users (name, created_at, updated_at) VALUES (?, ?, ?)",
                 (name, now, now)
             )
-            self.application.db.commit()
+            self.db.commit()
             user = dict(id=cursor.lastrowid, name=name, created_at=now, updated_at=now)
             self.write_json(data={"user": user}, status=201, message="User created successfully", start_time=start_time)
         except Exception as e:
@@ -79,6 +79,27 @@ class UserDetailHandler(BaseHandler):
             self.write_json(data=None, status=404, message="User not found", start_time=start_time)
             return
         self.write_json(data={"user": dict(row)}, status=200, message="User fetched successfully", start_time=start_time)
+
+    def put(self, user_id):
+        start_time = time.time()
+        try:
+            name = self.get_argument("name")
+            now = int(time.time() * 1e6)
+            cursor = self.application.db.cursor()
+            cursor.execute("""
+                UPDATE users SET name=?, updated_at=? WHERE id=?
+            """, (name, now, user_id))
+            self.db.commit()
+            self.write_json(data={"user_id": user_id}, status=200, message="User updated successfully", start_time=start_time)
+        except Exception as e:
+            self.write_json(data=None, status=500, message=f"Error updating user: {e}", start_time=start_time)
+
+    def delete(self, user_id):
+        start_time = time.time()
+        cursor = self.application.db.cursor()
+        cursor.execute("DELETE FROM users WHERE id=?", (user_id,))
+        self.db.commit()
+        self.write_json(data={"user_id": user_id}, status=200, message="User deleted successfully", start_time=start_time)
 
 class PingHandler(tornado.web.RequestHandler):
     def get(self):

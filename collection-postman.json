@@ -2,7 +2,7 @@
   "info": {
     "name": "Backend Tech Challenge",
     "_postman_id": "99-backend-challenge",
-    "description": "Postman Collection untuk Listing Service, User Service, dan Public API (port 8000, 8001, 8002)",
+    "description": "Postman Collection untuk Listing Service, User Service, dan Public API (port 8000, 8001, 8002) dengan CRUD lengkap",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -62,6 +62,43 @@
               "host": ["localhost"],
               "port": "8000",
               "path": ["listings"]
+            }
+          }
+        },
+        {
+          "name": "Update Listing",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "listing_type", "value": "house" },
+                { "key": "price", "value": "12000" }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/listings/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["listings", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Listing",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/listings/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["listings", "1"]
             }
           }
         }
@@ -135,6 +172,42 @@
               "host": ["localhost"],
               "port": "8001",
               "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "name", "value": "Alice Updated" }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8001/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8001/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["users", "1"]
             }
           }
         }

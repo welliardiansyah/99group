@@ -91,6 +91,39 @@ class ListingsHandler(BaseHandler):
         except Exception as e:
             self.write_json(data=None, status=500, message=f"Error creating listing: {e}", start_time=start_time)
 
+class ListingDetailHandler(BaseHandler):
+    def get(self, listing_id):
+        start_time = time.time()
+        cursor = self.application.db.cursor()
+        row = cursor.execute("SELECT * FROM listings WHERE id=?", (listing_id,)).fetchone()
+        if not row:
+            self.write_json(data=None, status=404, message="Listing not found", start_time=start_time)
+            return
+        self.write_json(data={"listing": dict(row)}, status=200, message="Listing fetched successfully", start_time=start_time)
+
+    def put(self, listing_id):
+        start_time = time.time()
+        try:
+            user_id = int(self.get_argument("user_id"))
+            listing_type = self.get_argument("listing_type")
+            price = int(self.get_argument("price"))
+            now = int(time.time() * 1e6)
+            cursor = self.application.db.cursor()
+            cursor.execute("""
+                UPDATE listings SET user_id=?, listing_type=?, price=?, updated_at=? WHERE id=?
+            """, (user_id, listing_type, price, now, listing_id))
+            self.application.db.commit()
+            self.write_json(data={"listing_id": listing_id}, status=200, message="Listing updated successfully", start_time=start_time)
+        except Exception as e:
+            self.write_json(data=None, status=500, message=f"Error updating listing: {e}", start_time=start_time)
+
+    def delete(self, listing_id):
+        start_time = time.time()
+        cursor = self.application.db.cursor()
+        cursor.execute("DELETE FROM listings WHERE id=?", (listing_id,))
+        self.application.db.commit()
+        self.write_json(data={"listing_id": listing_id}, status=200, message="Listing deleted successfully", start_time=start_time)
+
 class PingHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("pong!")
@@ -99,6 +132,7 @@ def make_app(options):
     return App([
         (r"/listings/ping", PingHandler),
         (r"/listings", ListingsHandler),
+        (r"/listings/([0-9]+)", ListingDetailHandler),
     ], debug=options.debug)
 
 if __name__ == "__main__":
