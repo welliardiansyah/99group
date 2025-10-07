@@ -1,0 +1,221 @@
+{
+  "info": {
+    "name": "Backend Tech Challenge",
+    "_postman_id": "99-backend-challenge",
+    "description": "Postman Collection untuk Listing Service, User Service, dan Public API (port 8000, 8001, 8002)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listing Service (Port 8000)",
+      "item": [
+        {
+          "name": "Ping Listing Service",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/listings/ping",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["listings", "ping"]
+            }
+          }
+        },
+        {
+          "name": "Get Listings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/listings?page_num=1&page_size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["listings"],
+              "query": [
+                { "key": "page_num", "value": "1" },
+                { "key": "page_size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Listing",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "user_id", "value": "1" },
+                { "key": "listing_type", "value": "rent" },
+                { "key": "price", "value": "5000" }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/listings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["listings"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Service (Port 8001)",
+      "item": [
+        {
+          "name": "Ping User Service",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8001/users/ping",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["users", "ping"]
+            }
+          }
+        },
+        {
+          "name": "Get Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8001/users?page_num=1&page_size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["users"],
+              "query": [
+                { "key": "page_num", "value": "1" },
+                { "key": "page_size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8001/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "name", "value": "Alice" }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8001/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8001",
+              "path": ["users"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public API (Port 8002)",
+      "item": [
+        {
+          "name": "Ping Public API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8002/public-api/ping",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8002",
+              "path": ["public-api", "ping"]
+            }
+          }
+        },
+        {
+          "name": "Get Public Listings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8002/public-api/listings?page_num=1&page_size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8002",
+              "path": ["public-api", "listings"],
+              "query": [
+                { "key": "page_num", "value": "1" },
+                { "key": "page_size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Public Listing",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user_id\":1,\"listing_type\":\"rent\",\"price\":5000}"
+            },
+            "url": {
+              "raw": "http://localhost:8002/public-api/listings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8002",
+              "path": ["public-api", "listings"]
+            }
+          }
+        },
+        {
+          "name": "Create Public User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Bob\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8002/public-api/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8002",
+              "path": ["public-api", "users"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
